@@ -11,6 +11,9 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [https://papaya-platypus-8a2bb2.netlify.app](https://papaya-platypus-8a2bb2.netlify.app) to view it in your browser.
 
+Username: Sathishkumar
+Password: 123
+
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
