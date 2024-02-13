@@ -1,23 +1,47 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import LoginForm from './components/LoginForm';
+import TransactionForm from './components/TransactionForm';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      setUser(JSON.parse(loggedInUser));
+    }
+  }, []);
+
+  const handleLogin = (user) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  const addTransaction = (transaction) => {
+    setTransactions([...transactions, transaction]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {user ? (
+        <div>
+          <h1>Welcome, {user.username}!</h1>
+          <button onClick={handleLogout}>Logout</button>
+          <TransactionForm addTransaction={addTransaction} />
+          <Dashboard transactions={transactions} />
+        </div>
+      ) : (
+        <LoginForm handleLogin={handleLogin} />
+      )}
     </div>
   );
 }
